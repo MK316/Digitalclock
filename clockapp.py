@@ -1,61 +1,30 @@
-from tkinter import *
+import streamlit as st
 from datetime import datetime
-from time import strftime
-from PIL import ImageTk,Image
+import time
 
-w=Tk()
-w.geometry('1280x720')
-w.minsize(750,200)
-w.title("Digital Clock")
+# Set the page configuration (optional)
+st.set_page_config(page_title="Digital Clock", layout="centered")
 
+# Function to extract the current time and day
+def get_time():
+    current_time = datetime.now().strftime("%H : %M : %S")
+    current_day = datetime.today().strftime("%A").upper()[:2]
+    return current_time, current_day
 
-#Extracting day 
-a=datetime.today().strftime('%A')
-b=(a.upper())
-c=(b[0:2]) 
+# Streamlit interface
+st.title("Digital Clock")
 
-#setting background
-img1=Image.open("g3.jpg")
-img2= ImageTk.PhotoImage(img1)
-Label(w,image=img2).place(x=-2,y=0)
+# Display time
+time_placeholder = st.empty()  # Placeholder for dynamic updates
+day_placeholder = st.empty()   # Placeholder for the day
 
-
-f1=Frame(w,width=750, height=200,bg='#0e1013')
-f1.pack(expand=True)
-
-#Mechenism
-def time():
-    a=strftime('%H : %M : %S')  #%H   %M   %S
-    l1.config(text=a)
-    l1.after(1000,time)
-
-l1=Label(f1, font=('Century Gothic',60),
-          bg='#0e1013',
-          foreground='#d3d3d3')
-
-l1.place(x=275,y=35)
-time()
-
-l2=Label(f1, font=('Century Gothic',60),
-          bg='#0e1013',
-          foreground='#d3d3d3')
-l2.config(text=c+" |")
-l2.place(x=75,y=35)
-
-#Required labels
-def labels():
-    l3=Label(f1, font=('Century Gothic',8),bg='#0e1013',fg='#7f7f7f',text='DAY')
-    l3.place(x=122,y=130)
-
-    l4=Label(f1, font=('Century Gothic',8),bg='#0e1013',fg='#7f7f7f',text='HOURS')
-    l4.place(x=305,y=130)
-
-    l5=Label(f1, font=('Century Gothic',8),bg='#0e1013',fg='#7f7f7f',text='MINUTES')
-    l5.place(x=445,y=130)
-
-    l3=Label(f1, font=('Century Gothic',8),bg='#0e1013',fg='#7f7f7f',text='SECONDS')
-    l3.place(x=445+145+5,y=130)
-
-labels()
-
-w.mainloop()
+while True:
+    # Get current time and day
+    current_time, current_day = get_time()
+    
+    # Display the clock and day
+    time_placeholder.markdown(f"<h1 style='text-align: center;'>{current_time}</h1>", unsafe_allow_html=True)
+    day_placeholder.markdown(f"<h2 style='text-align: center;'>{current_day} |</h2>", unsafe_allow_html=True)
+    
+    # Refresh every second
+    time.sleep(1)

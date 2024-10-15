@@ -7,10 +7,11 @@ from streamlit_lottie import st_lottie
 # Set the page configuration (optional)
 st.set_page_config(page_title="Digital Clock", layout="centered")
 
-# Function to load a Lottie animation from a file
+# Correct way to open a binary file, e.g., a Lottie animation file
 def load_lottiefile(filepath: str):
-    with open(filepath, "r") as file:
+    with open(filepath, "rb") as file:  # Note 'rb' for reading binary
         return file.read()
+
 
 # Function to extract the current time and day
 def get_time():

@@ -11,8 +11,14 @@ def get_time():
     current_day = datetime.today().strftime("%A").upper()[:2]
     return current_time, current_day
 
-# Streamlit interface
-st.title("Digital Clock")
+# Streamlit interface using columns to place the title and GIF side by side
+col1, col2 = st.columns([3, 1])  # Adjust the ratio as needed
+
+with col1:
+    st.title("Digital Clock")
+
+with col2:
+    st.image('snail.gif', width=100)  # Update 'path_to_your_gif.gif' with the actual path to your GIF file
 
 # Display time
 time_placeholder = st.empty()  # Placeholder for dynamic updates

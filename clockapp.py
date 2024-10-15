@@ -1,9 +1,16 @@
 import streamlit as st
 from datetime import datetime
 import time
+import requests
+from streamlit_lottie import st_lottie
 
 # Set the page configuration (optional)
 st.set_page_config(page_title="Digital Clock", layout="centered")
+
+# Function to load a Lottie animation from a file
+def load_lottiefile(filepath: str):
+    with open(filepath, "r") as file:
+        return file.read()
 
 # Function to extract the current time and day
 def get_time():
@@ -11,14 +18,17 @@ def get_time():
     current_day = datetime.today().strftime("%A").upper()[:2]
     return current_time, current_day
 
-# Streamlit interface using columns to place the title and GIF side by side
+# Load Lottie animation
+lottie_animation = load_lottiefile("Animation - 1728988122037.lottie")
+
+# Streamlit interface using columns to place the title and Lottie animation side by side
 col1, col2 = st.columns([3, 1])  # Adjust the ratio as needed
 
 with col1:
     st.title("Digital Clock")
 
 with col2:
-    st.image('snail.gif', width=100)  # Update 'path_to_your_gif.gif' with the actual path to your GIF file
+    st_lottie(lottie_animation, height=100, key="digital_clock")  # Set height appropriately
 
 # Display time
 time_placeholder = st.empty()  # Placeholder for dynamic updates
